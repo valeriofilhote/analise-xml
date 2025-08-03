@@ -57,7 +57,7 @@ async function main() {
     importationResult.printResult()
 
     // Create the excel file with the data
-    const excelBuilder = new ExcelBuilder(products, clients, deliveries)
+    const excelBuilder = new ExcelBuilder(clients, products, deliveries)
     await excelBuilder.build()
 
     console.log('Arquivos Excel gerados com sucesso na pasta temp!')
