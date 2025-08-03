@@ -18,26 +18,20 @@ class ExcelBuilder {
         // Definir cabeçalhos para produtos
         this.productsSheet.columns = [
             { header: 'Código', key: 'cProd', numFmt: '@' }, // Formato '@' força o Excel a tratar como texto
-            { header: 'EAN', key: 'cEAN', numFmt: '@' }, // Formato '@' força o Excel a tratar como texto
+            { header: 'EAN', key: 'cEAN', numFmt: '@' },
+            { header: 'EAN Tributário', key: 'cEANTrib', numFmt: '@' }, 
             { header: 'Descrição', key: 'xProd' },
             { header: 'Unidade', key: 'uCom' },
-            { header: 'Quantidade', key: 'qCom' },
-            { header: 'Valor Unitário', key: 'vUnCom' },
-            { header: 'Valor Total', key: 'vProd' },
-            { header: 'EAN Tributário', key: 'cEANTrib', numFmt: '@' } // Formato '@' força o Excel a tratar como texto
         ]
         const productData = this.products.map(p => ({
-            // Prefixar com aspa simples para forçar o Excel a tratar como texto
-            cProd: p.cProd ? "'" + p.cProd : '',
-            // Prefixar com aspa simples para forçar o Excel a tratar como texto
-            cEAN: p.cEAN ? "'" + p.cEAN : '',
+            cProd: p.cProd ,
+            cEAN: p.cEAN ,
             xProd: p.xProd,
             uCom: p.uCom,
             qCom: p.qCom,
             vUnCom: p.vUnCom,
             vProd: p.vProd,
-            // Prefixar com aspa simples para forçar o Excel a tratar como texto
-            cEANTrib: p.cEANTrib ? "'" + p.cEANTrib : ''
+            cEANTrib: p.cEANTrib ,
         }))
         // Adicionar dados de produtos
         this.productsSheet.addRows(productData)
@@ -62,12 +56,10 @@ class ExcelBuilder {
             nNF: d.nNF,
             dhEmi: d.dhEmi,
             natOp: d.natOp,
-            // Prefixar com aspa simples para forçar o Excel a tratar como texto
-            emit_CNPJ: d.emit_CNPJ ? "'" + d.emit_CNPJ : '',
+            emit_CNPJ: d.emit_CNPJ ,
             emit_xNome: d.emit_xNome,
             emit_xMun: d.emit_xMun,
-            // Prefixar com aspa simples para forçar o Excel a tratar como texto
-            dest_CNPJ: d.dest_CNPJ ? "'" + d.dest_CNPJ : '',
+            dest_CNPJ: d.dest_CNPJ,
             dest_xNome: d.dest_xNome,
             dest_xMun: d.dest_xMun
         }))
@@ -83,8 +75,7 @@ class ExcelBuilder {
         ]
 
         const clientData = this.clients.map(c => ({
-            // Prefixar com aspa simples para forçar o Excel a tratar como texto
-            CNPJ: c.CNPJ ? "'" + c.CNPJ : '',
+            CNPJ: c.CNPJ ,
             xNome: c.xNome,
             xMun: c.xMun
         }))
