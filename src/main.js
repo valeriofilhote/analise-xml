@@ -30,7 +30,8 @@ async function main() {
     // Get errors
     const errors = contents.filter(c => c.error)
     importationResult.setErrorQuantity(errors.length)
-
+    Logger(errors, 'errors.json')
+    
     // Get results
     const results = contents.filter(c => !c.error).map(c => c.result)
     importationResult.setResultsQuantity(results.length)
