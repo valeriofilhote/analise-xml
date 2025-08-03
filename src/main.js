@@ -2,19 +2,19 @@ const PathHandler = require('./handlers/path-handler')
 const readXmlContentFile = require('./handlers/file-handler')
 const xmlContentHandler = require('./handlers/xml-content-handler')
 const deliveryInfoExtractor = require('./handlers/delivery-info-extractor')
-const path = require('node:path')
-const fs = require('node:fs/promises')
 const Logger = require('./util/logger')
 const SheetInfoExtractor = require('./handlers/sheet-info-extractor')
 const ImportationResult = require('./util/importation-result')
+const ExcelBuilder = require('./handlers/excel-builder')
 
 async function main() {
+
     // ImportationResult
     const importationResult = new ImportationResult()
 
     // Get files names
     const fileNames = await readXmlContentFile(PathHandler.xmlFilesPath)
-    if(fileNames.error){
+    if (fileNames.error) {
         return console.error('Error on reading xmls folder:', fileNames.error)
     }
 
@@ -42,21 +42,25 @@ async function main() {
     const products = sheetInfoExtractor.extractProducts()
     importationResult.setProductsQuantity(products.length)
     Logger(products, 'products.json')
-    
+
     // Extract Clients
     const clients = sheetInfoExtractor.extractClients()
     importationResult.setClientsQuantity(clients.length)
     Logger(clients, 'clients.json')
-    
+
     // Extract Deliveries
     const deliveries = sheetInfoExtractor.extractDeliveries()
     importationResult.setDeliveriesQuantity(deliveries.length)
     Logger(deliveries, 'deliveries.json')
 
-    // Save Excel file
-
     // Print ImportationResult
     importationResult.printResult()
+
+    // Create the excel file with the data
+    const excelBuilder = new ExcelBuilder(products, clients, deliveries)
+    await excelBuilder.build()
+
+    console.log('Arquivos Excel gerados com sucesso na pasta temp!')
 }
 
 main().catch(err => console.error(err))
