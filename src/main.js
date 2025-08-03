@@ -1,11 +1,12 @@
-import PathHandler from './handlers/path-handler.js'
-import readXmlContentFile from './handlers/file-handler.js'
-import xmlContentHandler from './handlers/xml-content-handler.js'
-import deliveryInfoExtractor from './handlers/delivery-info-extractor.js'
-import Logger from './util/logger.js'
-import SheetInfoExtractor from './handlers/sheet-info-extractor.js'
-import ImportationResult from './util/importation-result.js'
-import ExcelBuilder from './handlers/excel-builder.js'
+import { 
+    PathHandler, 
+    readXmlContentFile, 
+    xmlContentHandler, 
+    deliveryInfoExtractor, 
+    SheetInfoExtractor, 
+    ExcelBuilder 
+} from './handlers/index.js'
+import { Logger, ImportationResult } from './util/index.js'
 
 async function main() {
 
