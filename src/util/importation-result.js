@@ -35,4 +35,4 @@ class ImportationResult {
     }
 }
 
-module.exports = ImportationResult
+export default ImportationResult

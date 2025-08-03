@@ -1,4 +1,4 @@
-const path = require('node:path')
+import path from 'node:path'
 
 const rootPath = process.cwd()
 const PathHandler = {
@@ -6,4 +6,4 @@ const PathHandler = {
     tempPath: path.join(rootPath, 'temp')
 }
 
-module.exports = PathHandler
+export default PathHandler

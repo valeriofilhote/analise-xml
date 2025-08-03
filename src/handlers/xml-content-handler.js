@@ -1,7 +1,7 @@
-const fs = require('node:fs/promises')
-const PathHandler = require('./path-handler')
-const path = require('node:path')
-const { XMLParser } = require('fast-xml-parser')
+import { readFile } from 'node:fs/promises'
+import PathHandler from './path-handler.js'
+import path from 'node:path'
+import { XMLParser } from 'fast-xml-parser'
 
 const parser = new XMLParser({
     parseTagValue: false, // Não tenta converter os valores
@@ -10,8 +10,8 @@ const parser = new XMLParser({
 
 async function xmlContentHandler(fileName) {
     const filePath = path.join(PathHandler.xmlFilesPath, fileName)
-    const xmlContent = await fs.readFile(filePath, {encoding: 'utf-8'})
+    const xmlContent = await readFile(filePath, {encoding: 'utf-8'})
     return parser.parse(xmlContent)
 }
 
-module.exports = xmlContentHandler
+export default xmlContentHandler

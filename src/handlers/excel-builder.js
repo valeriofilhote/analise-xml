@@ -1,6 +1,6 @@
-const ExcelJS = require('exceljs');
-const path = require('node:path')
-const PathHandler = require('./path-handler')
+import ExcelJS from 'exceljs';
+import path from 'node:path';
+import PathHandler from './path-handler.js';
 
 class ExcelBuilder {
     constructor(clients, products, deliveries) {
@@ -93,4 +93,4 @@ class ExcelBuilder {
     }
 }
 
-module.exports = ExcelBuilder;
+export default ExcelBuilder;

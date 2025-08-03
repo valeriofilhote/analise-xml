@@ -1,11 +1,11 @@
-const PathHandler = require('./handlers/path-handler')
-const readXmlContentFile = require('./handlers/file-handler')
-const xmlContentHandler = require('./handlers/xml-content-handler')
-const deliveryInfoExtractor = require('./handlers/delivery-info-extractor')
-const Logger = require('./util/logger')
-const SheetInfoExtractor = require('./handlers/sheet-info-extractor')
-const ImportationResult = require('./util/importation-result')
-const ExcelBuilder = require('./handlers/excel-builder')
+import PathHandler from './handlers/path-handler.js'
+import readXmlContentFile from './handlers/file-handler.js'
+import xmlContentHandler from './handlers/xml-content-handler.js'
+import deliveryInfoExtractor from './handlers/delivery-info-extractor.js'
+import Logger from './util/logger.js'
+import SheetInfoExtractor from './handlers/sheet-info-extractor.js'
+import ImportationResult from './util/importation-result.js'
+import ExcelBuilder from './handlers/excel-builder.js'
 
 async function main() {
 

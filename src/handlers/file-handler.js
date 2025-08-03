@@ -1,11 +1,11 @@
-const fs = require('node:fs/promises')
+import { readdir } from 'node:fs/promises'
 
 async function readXmlContentFile(xmlFilePath) {
-    const filesNames = await fs.readdir(xmlFilePath, {encoding: 'utf-8'})
+    const filesNames = await readdir(xmlFilePath, {encoding: 'utf-8'})
     if(filesNames.length === 0) {
         return {error: "No files found in :" + xmlFilePath}
     }
     return filesNames
 }
 
-module.exports = readXmlContentFile
+export default readXmlContentFile

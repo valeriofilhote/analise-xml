@@ -69,4 +69,4 @@ function deliveryInfoExtractor(xmlContent) {
     return {error: null, result}
 }
 
-module.exports = deliveryInfoExtractor
+export default deliveryInfoExtractor

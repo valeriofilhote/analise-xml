@@ -76,4 +76,4 @@ class SheetInfoExtractor {
     }
 }
 
-module.exports = SheetInfoExtractor
+export default SheetInfoExtractor
