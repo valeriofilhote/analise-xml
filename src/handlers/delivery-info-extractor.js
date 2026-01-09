@@ -1,20 +1,20 @@
 function deliveryInfoExtractor(xmlContent) {
     const result = {}
-    if(!xmlContent || !xmlContent.nfeProc || !xmlContent.nfeProc.NFe || !xmlContent.nfeProc.NFe.infNFe) {
-        return {error: 'Invalid XML content'}
+    if (!xmlContent || !xmlContent.nfeProc || !xmlContent.nfeProc.NFe || !xmlContent.nfeProc.NFe.infNFe) {
+        return { error: 'Invalid XML content', xmlContent }
     }
     const info = xmlContent.nfeProc.NFe.infNFe
-    if(!info.ide || !info.ide.natOp || !info.ide.nNF || !info.ide.dhEmi){
-        return {error: 'Invalid XML content - ide'}
+    if (!info.ide || !info.ide.natOp || !info.ide.nNF || !info.ide.dhEmi) {
+        return { error: 'Invalid XML content - ide', xmlContent }
     }
     result.ide = {
         natOp: info.ide.natOp,
         nNF: info.ide.nNF,
         dhEmi: info.ide.dhEmi
     }
-    
-    if(!info || !info.emit || !info.emit.CNPJ || !info.emit.xNome || !info.emit.enderEmit || !info.emit.enderEmit.xMun){
-        return {error: 'Invalid XML content - emit'}
+
+    if (!info || !info.emit || !info.emit.CNPJ || !info.emit.xNome || !info.emit.enderEmit || !info.emit.enderEmit.xMun) {
+        return { error: 'Invalid XML content - emit', xmlContent }
     }
     result.emit = {
         CNPJ: info.emit.CNPJ,
@@ -22,27 +22,29 @@ function deliveryInfoExtractor(xmlContent) {
         xMun: info.emit.enderEmit.xMun
     }
 
-    if(!info || !info.dest || !info.dest.CNPJ || !info.dest.xNome || !info.dest.enderDest || !info.dest.enderDest.xMun){
-        return {error: 'Invalid XML content - dest'}
+    if (!info || !info.dest || !info.dest.CNPJ || !info.dest.xNome || !info.dest.enderDest || !info.dest.enderDest.xMun) {
+        return { error: 'Invalid XML content - dest', xmlContent }
     }
     result.dest = {
         CNPJ: info.dest.CNPJ,
         xNome: info.dest.xNome,
-        xMun: info.dest.enderDest.xMun
+        xMun: info.dest.enderDest.xMun,
+        items: []
     }
 
-    if(!info.det || !Array.isArray(info.det)){
-        return {error: 'Invalid XML content - det'}
+    if (!info.det || !Array.isArray(info.det)) {
+        return { error: 'Invalid XML content - det', xmlContent }
     }
-    result.det = info.det.map(item => {
-        if(
+
+    for (const item of info.det) {
+        if (
             !item || !item.prod || !item.prod.cProd || !item.prod.cEAN ||
             !item.prod.xProd || !item.prod.uCom || !item.prod.qCom || !item.prod.vUnCom ||
             !item.prod.vProd || !item.prod.cEANTrib
-        ){
-            return {error: 'Invalid XML content - prod'}
+        ) {
+            return { error: 'Invalid XML content - prod', xmlContent }
         }
-        return {
+        result.dest.items.push({
             cProd: item.prod.cProd,
             cEAN: item.prod.cEAN,
             xProd: item.prod.xProd,
@@ -50,12 +52,13 @@ function deliveryInfoExtractor(xmlContent) {
             qCom: item.prod.qCom,
             vUnCom: item.prod.vUnCom,
             vProd: item.prod.vProd,
-            cEANTrib: item.prod.cEANTrib
-        }
-    })
+            cEANTrib: item.prod.cEANTrib,
+            infAdProd: item.infAdProd ?? ''
+        })
+    }
 
-    if(!info.transp || !info.transp.vol || !info.transp.vol){
-       return {error: 'Invalid XML content - transp'} 
+    if (!info.transp || !info.transp.vol || !info.transp.vol) {
+        return { error: 'Invalid XML content - transp', xmlContent }
     }
 
     result.vol = {
@@ -64,9 +67,9 @@ function deliveryInfoExtractor(xmlContent) {
         pesoL: info.transp.vol.pesoL,
         pesoB: info.transp.vol.pesoB,
     }
-    
-    
-    return {error: null, result}
+
+
+    return { error: null, result }
 }
 
 export default deliveryInfoExtractor

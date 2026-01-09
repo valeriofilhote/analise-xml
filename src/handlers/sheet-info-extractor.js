@@ -5,10 +5,11 @@ class SheetInfoExtractor {
 
     extractProducts() {
         const products = []
+
         for (const result of this.results) {
-            result.det.forEach(p => {
-                const addProduct = products.find(prod => prod.cProd === p.cProd)
-                if (!addProduct) {
+            result.dest.items.forEach(p => {
+                const addedProduct = products.find(prod => prod.cProd === p.cProd)
+                if (!addedProduct) {
                     products.push({
                         cProd: p.cProd,
                         cEAN: p.cEAN,
@@ -22,6 +23,7 @@ class SheetInfoExtractor {
                 }
             })
         }
+
         return products
     }
 
@@ -48,16 +50,6 @@ class SheetInfoExtractor {
                 d.emit_CNPJ === result.emit.CNPJ
             ))
             if (!addedDelivery) {
-                const det = result.det.map(d => ({
-                    cProd: d.cProd,
-                    cEAN: d.cEAN,
-                    xProd: d.xProd,
-                    uCom: d.uCom,
-                    qCom: d.qCom,
-                    vUnCom: d.vUnCom,
-                    vProd: d.vProd,
-                    cEANTrib: d.cEANTrib
-                }))
                 deliveries.push({
                     nNF: result.ide.nNF,
                     dhEmi: result.ide.dhEmi,
@@ -68,7 +60,7 @@ class SheetInfoExtractor {
                     dest_CNPJ: result.dest.CNPJ,
                     dest_xNome: result.dest.xNome,
                     dest_xMun: result.dest.xMun,
-                    det
+                    items: result.dest.items
                 })
             }
         }

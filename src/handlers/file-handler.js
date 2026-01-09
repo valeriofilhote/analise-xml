@@ -1,9 +1,12 @@
 import { readdir } from 'node:fs/promises'
 
 async function readXmlContentFile(xmlFilePath) {
-    const filesNames = await readdir(xmlFilePath, {encoding: 'utf-8'})
-    if(filesNames.length === 0) {
-        return {error: "No files found in :" + xmlFilePath}
+    let filesNames = await readdir(xmlFilePath, { encoding: 'utf-8' })
+
+    filesNames = filesNames.filter(file => file.endsWith('.xml'))
+
+    if (filesNames.length === 0) {
+        return { error: "No files found in :" + xmlFilePath }
     }
     return filesNames
 }
