@@ -1,14 +1,16 @@
-import { 
-    PathHandler, 
-    readXmlContentFile, 
-    xmlContentHandler, 
-    deliveryInfoExtractor, 
-    SheetInfoExtractor, 
-    ExcelBuilder 
+import {
+    deliveryInfoExtractor,
+    ExcelBuilder,
+    PathHandler,
+    readXmlContentFile,
+    SheetInfoExtractor,
+    xmlContentHandler
 } from './handlers/index.js'
-import { Logger, ImportationResult } from './util/index.js'
+import { ImportationResult, Logger } from './util/index.js'
 
 async function main() {
+
+    console.log('Iniciando a importação dos arquivos XML...')
 
     // ImportationResult
     const importationResult = new ImportationResult()
@@ -31,7 +33,7 @@ async function main() {
     const errors = contents.filter(c => c.error)
     importationResult.setErrorQuantity(errors.length)
     Logger(errors, 'errors.json')
-    
+
     // Get results
     const results = contents.filter(c => !c.error).map(c => c.result)
     importationResult.setResultsQuantity(results.length)

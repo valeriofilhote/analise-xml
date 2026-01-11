@@ -22,28 +22,23 @@ function deliveryInfoExtractor(xmlContent) {
         xMun: info.emit.enderEmit.xMun
     }
 
-    if (!info || !info.dest || !info.dest.CNPJ || !info.dest.xNome || !info.dest.enderDest || !info.dest.enderDest.xMun) {
+    if (!info || !info.dest || (!info.dest.CNPJ && !info.dest.CPF) || !info.dest.xNome || !info.dest.enderDest || !info.dest.enderDest.xMun) {
         return { error: 'Invalid XML content - dest', xmlContent }
     }
     result.dest = {
-        CNPJ: info.dest.CNPJ,
+        CNPJ: info.dest.CNPJ || info.dest.CPF,
         xNome: info.dest.xNome,
         xMun: info.dest.enderDest.xMun,
         items: []
     }
 
-    if (!info.det || !Array.isArray(info.det)) {
+    if (!info.det) {
         return { error: 'Invalid XML content - det', xmlContent }
     }
 
-    for (const item of info.det) {
-        if (
-            !item || !item.prod || !item.prod.cProd || !item.prod.cEAN ||
-            !item.prod.xProd || !item.prod.uCom || !item.prod.qCom || !item.prod.vUnCom ||
-            !item.prod.vProd || !item.prod.cEANTrib
-        ) {
-            return { error: 'Invalid XML content - prod', xmlContent }
-        }
+    if (!Array.isArray(info.det)) {
+        const item = info.det
+
         result.dest.items.push({
             cProd: item.prod.cProd,
             cEAN: item.prod.cEAN,
@@ -55,6 +50,27 @@ function deliveryInfoExtractor(xmlContent) {
             cEANTrib: item.prod.cEANTrib,
             infAdProd: item.infAdProd ?? ''
         })
+    } else {
+        for (const item of info.det) {
+            if (
+                !item || !item.prod || !item.prod.cProd || !item.prod.cEAN ||
+                !item.prod.xProd || !item.prod.uCom || !item.prod.qCom || !item.prod.vUnCom ||
+                !item.prod.vProd || !item.prod.cEANTrib
+            ) {
+                return { error: 'Invalid XML content - prod', xmlContent }
+            }
+            result.dest.items.push({
+                cProd: item.prod.cProd,
+                cEAN: item.prod.cEAN,
+                xProd: item.prod.xProd,
+                uCom: item.prod.uCom,
+                qCom: item.prod.qCom,
+                vUnCom: item.prod.vUnCom,
+                vProd: item.prod.vProd,
+                cEANTrib: item.prod.cEANTrib,
+                infAdProd: item.infAdProd ?? ''
+            })
+        }
     }
 
     if (!info.transp || !info.transp.vol || !info.transp.vol) {

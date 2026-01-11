@@ -46,7 +46,7 @@ class ExcelBuilder {
             { header: 'CNPJ Emitente', key: 'emit_CNPJ', numFmt: '@' }, // Formato '@' força o Excel a tratar como texto
             { header: 'Nome Emitente', key: 'emit_xNome' },
             { header: 'Município Emitente', key: 'emit_xMun' },
-            { header: 'CNPJ Destinatário', key: 'dest_CNPJ', numFmt: '@' }, // Formato '@' força o Excel a tratar como texto
+            { header: 'CNPJ/CPF Destinatário', key: 'dest_CNPJ', numFmt: '@' }, // Formato '@' força o Excel a tratar como texto
             { header: 'Nome Destinatário', key: 'dest_xNome' },
             { header: 'Município Destinatário', key: 'dest_xMun' },
             { header: 'Código do Produto', key: 'cProd' },
@@ -92,7 +92,7 @@ class ExcelBuilder {
     #buildClients() {
         // Definir cabeçalhos para clientes
         this.clientsSheet.columns = [
-            { header: 'CNPJ', key: 'CNPJ', numFmt: '@' }, // Formato '@' força o Excel a tratar como texto
+            { header: 'CNPJ/CPF', key: 'CNPJ', numFmt: '@' }, // Formato '@' força o Excel a tratar como texto
             { header: 'Nome', key: 'xNome' },
             { header: 'Município', key: 'xMun' }
         ]
